@@ -67,9 +67,14 @@
     "stingyRecoveriesCombat": true,
     # Also require a story point to recover disabled player ships post battle. stingyRecoveriesCombat must be true.
     "stingyRecoveriesCombatIncludePlayerShips": true,
-    # Require story point to recover player ships by size. Only applies if above setting is true.
-    # 1 = all ships. 2 = destroyer + cruiser + capital. 3 = cruiser + capital. 4 = capital only.
-    "stingyRecoveriesCombatPlayerShipsSize": 1,
+    # Chance for disabled ships to cost a story point based on size. Only applies if above setting is true.
+    # 1 = always costs a story point, 0.5 = 50% chance, 0 = never cost a story point. (Only affects ships that would otherwise be recoverable)
+    "stingyRecoveriesCombatPlayerShipsFrigate": 1,
+    "stingyRecoveriesCombatPlayerShipsDestroyer": 1,
+    "stingyRecoveriesCombatPlayerShipsCruiser": 1,
+    "stingyRecoveriesCombatPlayerShipsCapital": 1,
+    # Also apply the settings above to floating derelict ships instead of always requiring SP. Only applies if stingyRecoveriesDerelicts is true.
+    "stingyRecoveriesDerelictsUsePlayerChance": true,
 
     # Reduce quantity of salvaged items.
     "salvageMultiplier": -0.5, # vanilla: 0

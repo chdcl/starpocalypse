@@ -8,6 +8,7 @@ import com.fs.starfarer.api.impl.campaign.FleetEncounterContext;
 import java.util.LinkedList;
 import java.util.List;
 import starpocalypse.helper.ConfigHelper;
+import starpocalypse.helper.ShipRecoveryUtils;
 
 public class StarpocalypseFleetEncounterContext extends FleetEncounterContext {
 
@@ -35,16 +36,8 @@ public class StarpocalypseFleetEncounterContext extends FleetEncounterContext {
 
         // Loop through recoverable ships and pull out player ships according to settings.
         for (FleetMemberAPI ship : recoverableShips) {
-            if (playerFleet.contains(ship)) {
-                if (!ConfigHelper.isStingyRecoveriesIncludePlayerShips()) {
-                    playerShips.add(ship);
-                } else if (ship.isFrigate() && ConfigHelper.getStingyRecoveriesCombatPlayerShipsSize() > 1) {
-                    playerShips.add(ship);
-                } else if (ship.isDestroyer() && ConfigHelper.getStingyRecoveriesCombatPlayerShipsSize() > 2) {
-                    playerShips.add(ship);
-                } else if (ship.isCruiser() && ConfigHelper.getStingyRecoveriesCombatPlayerShipsSize() > 3) {
-                    playerShips.add(ship);
-                }
+            if (playerFleet.contains(ship) && !ShipRecoveryUtils.isStingyRecovery(ship.getVariant())) {
+                playerShips.add(ship);
             }
         }
 

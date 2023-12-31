@@ -56,6 +56,9 @@ public class ConfigHelper {
 
     @Getter
     private static boolean stingyRecoveriesDerelicts = true;
+    
+    @Getter
+    private static boolean stingyRecoveriesDerelictsUsePlayerChance = true;
 
     @Getter
     private static boolean stingyRecoveriesCombat = true;
@@ -64,7 +67,16 @@ public class ConfigHelper {
     private static boolean stingyRecoveriesIncludePlayerShips = true;
 
     @Getter
-    private static int stingyRecoveriesCombatPlayerShipsSize = 1;
+    private static float stingyRecoveriesCombatPlayerChanceFrigate = 1f;
+
+    @Getter
+    private static float stingyRecoveriesCombatPlayerChanceDestroyer = 1f;
+
+    @Getter
+    private static float stingyRecoveriesCombatPlayerChanceCruiser = 1f;
+
+    @Getter
+    private static float stingyRecoveriesCombatPlayerChanceCapital = 1f;
 
     @Getter
     private static final SimpleSet shyBlackMarketFaction = new SimpleSet("faction", "shyBlackMarketFaction.csv");
@@ -111,9 +123,13 @@ public class ConfigHelper {
         removeEndgameShips = settings.optBoolean("removeMilitaryEndgameShips", true);
         shyBlackMarket = settings.optBoolean("shyBlackMarket", true);
         stingyRecoveriesDerelicts = settings.optBoolean("stingyRecoveriesDerelicts", true);
+        stingyRecoveriesDerelictsUsePlayerChance = settings.optBoolean("stingyRecoveriesDerelictsUsePlayerChance", false);
         stingyRecoveriesCombat = settings.optBoolean("stingyRecoveriesCombat", true);
         stingyRecoveriesIncludePlayerShips = settings.optBoolean("stingyRecoveriesCombatIncludePlayerShips", true);
-        stingyRecoveriesCombatPlayerShipsSize = settings.optInt("stingyRecoveriesCombatPlayerShipsSize", 1);
+        stingyRecoveriesCombatPlayerChanceFrigate = (float) settings.optDouble("stingyRecoveriesCombatPlayerChanceFrigate", 1f);
+        stingyRecoveriesCombatPlayerChanceDestroyer = (float) settings.optDouble("stingyRecoveriesCombatPlayerChanceDestroyer", 1f);
+        stingyRecoveriesCombatPlayerChanceCruiser = (float) settings.optDouble("stingyRecoveriesCombatPlayerChanceCruiser", 1f);
+        stingyRecoveriesCombatPlayerChanceCapital = (float) settings.optDouble("stingyRecoveriesCombatPlayerChanceCapital", 1f);
     }
 
     private static void transparentMarket(JSONObject settings, Logger log) {
