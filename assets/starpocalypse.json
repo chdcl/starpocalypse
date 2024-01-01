@@ -69,10 +69,10 @@
     "stingyRecoveriesCombatIncludePlayerShips": true,
     # Chance for disabled ships to cost a story point based on size. Only applies if above setting is true.
     # 1 = always costs a story point, 0.5 = 50% chance, 0 = never cost a story point. (Only affects ships that would otherwise be recoverable)
-    "stingyRecoveriesCombatPlayerShipsFrigate": 1,
-    "stingyRecoveriesCombatPlayerShipsDestroyer": 1,
-    "stingyRecoveriesCombatPlayerShipsCruiser": 1,
-    "stingyRecoveriesCombatPlayerShipsCapital": 1,
+    "stingyRecoveriesCombatPlayerChanceFrigate": 1,
+    "stingyRecoveriesCombatPlayerChanceDestroyer": 1,
+    "stingyRecoveriesCombatPlayerChanceCruiser": 1,
+    "stingyRecoveriesCombatPlayerChanceCapital": 1,
     # Also apply the settings above to floating derelict ships instead of always requiring SP. Only applies if stingyRecoveriesDerelicts is true.
     "stingyRecoveriesDerelictsUsePlayerChance": true,
 

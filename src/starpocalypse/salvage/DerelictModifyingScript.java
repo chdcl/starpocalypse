@@ -51,10 +51,10 @@ public class DerelictModifyingScript implements EveryFrameScript {
         if (memory.contains(MemFlags.SALVAGE_SPECIAL_DATA)) {
             Object specialData = memory.get(MemFlags.SALVAGE_SPECIAL_DATA);
             if (specialData instanceof ShipRecoverySpecial.ShipRecoverySpecialData) {
-                ShipRecoverySpecial.ShipRecoverySpecialData data = (ShipRecoverySpecial.ShipRecoverySpecialData) specialData;
+                ShipRecoverySpecial.ShipRecoverySpecialData data =
+                        (ShipRecoverySpecial.ShipRecoverySpecialData) specialData;
                 // If the recovery already costs a story point, don't modify it
-                if (data.storyPointRecovery != null &&
-                    data.storyPointRecovery) {
+                if (data.storyPointRecovery != null && data.storyPointRecovery) {
                     return;
                 }
 
@@ -63,8 +63,7 @@ public class DerelictModifyingScript implements EveryFrameScript {
 
                 // If stingyRecoveriesDerelictsUsePlayerChance is true, try to apply disabled player ship recovery logic
                 if (ConfigHelper.isStingyRecoveriesDerelictsUsePlayerChance()) {
-
-                    // Try / catch block because this is scary and inconsistent
+                    // Try / catch block because ShipRecoverySpecialData is internal and sometimes behaves weirdly
                     try {
                         // This only really makes sense if the derelict entity has a single ship
                         if (data.ships.size() == 1) {
@@ -74,11 +73,18 @@ public class DerelictModifyingScript implements EveryFrameScript {
                             if (shipVariant == null) {
                                 shipVariant = Global.getSettings().getVariant(shipData.variantId);
                             }
+
+                            // Minimum 50% chance to cost a story point, no matter the ship size and config
+                            // Otherwise, stingy recovery chance has weird quadratic scaling where a low chance
+                            // results in both increased new ships from derelicts and decreased combat losses
+                            final float stingyRecoveryMinChance = 0.5f;
+
                             // Determine if the recover should cost an SP, based on hull size
-                            data.storyPointRecovery = ShipRecoveryUtils.isStingyRecovery(shipVariant);
+                            data.storyPointRecovery = ShipRecoveryUtils.isStingyRecovery(shipVariant,
+                                    stingyRecoveryMinChance);
                         }
                     } catch (Exception ignored) {
-                        // Something went wrong with parsing the ship type, so it will just keep costing a story point, no problem
+                        // Something went wrong with parsing the ship type, so it will just keep costing a story point
                     }
                 }
             }
