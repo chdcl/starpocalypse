@@ -65,16 +65,16 @@
     # (both derelict ships found across the sector, and post battle recoveries).
     "stingyRecoveriesDerelicts": true,
     "stingyRecoveriesCombat": true,
+    # Small chance to get an easy derelict recovery, increasing with salvage skill and gantries. Higher chance for smaller ships
+    "stingyRecoveriesDerelictsUseSalvageBonus": true,
     # Also require a story point to recover disabled player ships post battle. stingyRecoveriesCombat must be true.
     "stingyRecoveriesCombatIncludePlayerShips": true,
     # Chance for disabled ships to cost a story point based on size. Only applies if above setting is true.
     # 1 = always costs a story point, 0.5 = 50% chance, 0 = never cost a story point. (Only affects ships that would otherwise be recoverable)
-    "stingyRecoveriesCombatPlayerChanceFrigate": 1,
-    "stingyRecoveriesCombatPlayerChanceDestroyer": 1,
-    "stingyRecoveriesCombatPlayerChanceCruiser": 1,
+    "stingyRecoveriesCombatPlayerChanceFrigate": 0.25,
+    "stingyRecoveriesCombatPlayerChanceDestroyer": 0.5,
+    "stingyRecoveriesCombatPlayerChanceCruiser": 0.75,
     "stingyRecoveriesCombatPlayerChanceCapital": 1,
-    # Also apply the settings above to floating derelict ships instead of always requiring SP. Only applies if stingyRecoveriesDerelicts is true.
-    "stingyRecoveriesDerelictsUsePlayerChance": true,
 
     # Reduce quantity of salvaged items.
     "salvageMultiplier": -0.5, # vanilla: 0

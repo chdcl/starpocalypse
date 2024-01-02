@@ -157,6 +157,10 @@ public class StarpocalypseMod extends BaseModPlugin {
     private void setMaxPermaMods() {
         int maxPermaMods = settings.optInt("maxPermaMods", 0);
         Misc.MAX_PERMA_MODS = maxPermaMods;
+
+        // Some mods read this setting instead of Misc.MAX_PERMA_MODS (e.g. Progressive S-mods, Quality Captains)
+        // I don't know why there is no setInt(), but internally all int settings are floats. See obf/StarfarerSettings
+        Global.getSettings().setFloat("maxPermanentHullmods", (float) maxPermaMods);
     }
 
     private void stingyDerelictRecoveries() {

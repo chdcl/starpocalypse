@@ -56,9 +56,9 @@ public class ConfigHelper {
 
     @Getter
     private static boolean stingyRecoveriesDerelicts = true;
-    
+
     @Getter
-    private static boolean stingyRecoveriesDerelictsUsePlayerChance = true;
+    private static boolean stingyRecoveriesDerelictsUseSalvageBonus;
 
     @Getter
     private static boolean stingyRecoveriesCombat = true;
@@ -123,7 +123,7 @@ public class ConfigHelper {
         removeEndgameShips = settings.optBoolean("removeMilitaryEndgameShips", true);
         shyBlackMarket = settings.optBoolean("shyBlackMarket", true);
         stingyRecoveriesDerelicts = settings.optBoolean("stingyRecoveriesDerelicts", true);
-        stingyRecoveriesDerelictsUsePlayerChance = settings.optBoolean("stingyRecoveriesDerelictsUsePlayerChance", false);
+        stingyRecoveriesDerelictsUseSalvageBonus = settings.optBoolean("stingyRecoveriesDerelictsUseSalvageBonus",true);
         stingyRecoveriesCombat = settings.optBoolean("stingyRecoveriesCombat", true);
         stingyRecoveriesIncludePlayerShips = settings.optBoolean("stingyRecoveriesCombatIncludePlayerShips", true);
         stingyRecoveriesCombatPlayerChanceFrigate = (float) settings.optDouble("stingyRecoveriesCombatPlayerChanceFrigate", 1f);
