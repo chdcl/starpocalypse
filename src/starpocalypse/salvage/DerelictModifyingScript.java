@@ -89,19 +89,23 @@ public class DerelictModifyingScript implements EveryFrameScript {
         }
     }
 
-    private ShipVariantAPI getShipRecoverySpecialDataShipVariant(ShipRecoverySpecial.ShipRecoverySpecialData data) {
+    private ShipAPI.HullSize getShipRecoverySpecialDataMaxHullSize(ShipRecoverySpecial.ShipRecoverySpecialData data) {
         // Try / catch block because ShipRecoverySpecialData is internal and sometimes behaves weirdly
         try {
-            // This only really makes sense if the derelict entity has a single ship
-            if (data.ships.size() == 1) {
-                ShipRecoverySpecial.PerShipData shipData = data.ships.get(0);
+            ShipAPI.HullSize maxHullSize = null;
+            for (ShipRecoverySpecial.PerShipData shipData: data.ships) {
                 ShipVariantAPI variant = shipData.variant;
                 // Sometimes shipData.variant is null, need to parse from variantId
                 if (variant == null) {
                     variant = Global.getSettings().getVariant(shipData.variantId);
                 }
-                return variant;
+                if (variant != null) {
+                    if (maxHullSize == null || variant.getHullSize().ordinal() > maxHullSize.ordinal()) {
+                        maxHullSize = variant.getHullSize();
+                    }
+                }
             }
+            return maxHullSize;
         } catch (Exception ignored) {}
 
         return null;
@@ -128,17 +132,19 @@ public class DerelictModifyingScript implements EveryFrameScript {
                 // By default, make it cost a story point
                 data.storyPointRecovery = true;
 
-                // If setting is enabled, roll for easy recovery
+                // If setting is enabled, roll for easy recovery based on salvage bonus and hull size
                 if (ConfigHelper.isStingyRecoveriesDerelictsUseSalvageBonus()) {
-                    ShipVariantAPI variant = getShipRecoverySpecialDataShipVariant(data);
-                    if (variant == null) {
-                        // Failed to determine ship variant
+                    // If there are multiple derelict ships in the salvage data, use the largest one for calculating
+                    // recovery chance (larger ship = lower chance)
+                    ShipAPI.HullSize hullSize = getShipRecoverySpecialDataMaxHullSize(data);
+                    if (hullSize == null) {
+                        // Failed to determine any ship variant of salvage data
                         return;
                     }
 
                     // Base of 10% for frigates, increased with salvage skill and salvage gantries
                     float recoveryChance = getDerelictRecoveryChance();
-                    recoveryChance *= getDerelictRecoveryChanceSizeFactor(variant.getHullSize());
+                    recoveryChance *= getDerelictRecoveryChanceSizeFactor(hullSize);
                     if (Math.random() < recoveryChance) {
                         data.storyPointRecovery = false;
                     }
